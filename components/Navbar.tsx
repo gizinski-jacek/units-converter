@@ -4,7 +4,7 @@ import styles from '../styles/Navbar.module.scss';
 
 const Navbar = () => {
 	return (
-		<nav className={`${styles.nav} col-2`}>
+		<nav className={`${styles.nav} col-3`}>
 			<Link href='/currency'>Currency</Link>
 			<Link href='/length'>Length</Link>
 			<Link href='/temperature'>Temperature</Link>
