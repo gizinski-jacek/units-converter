@@ -1,0 +1,94 @@
+.caret_up,
+.caret_down {
+	display: block;
+	width: 25px;
+	height: 19px;
+	position: relative;
+	transition: 0.3s ease-in-out;
+}
+
+.caret_up::before,
+.caret_up::after,
+.caret_down::before,
+.caret_down::after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 1px;
+	right: 6px;
+	width: 3px;
+	height: 12px;
+	background-color: rgb(0, 0, 0);
+	transform-origin: center center;
+}
+
+.caret_up::before {
+	transform: translateX(-7px) rotate(45deg);
+}
+
+.caret_up::after {
+	transform: rotate(-45deg);
+}
+
+.caret_down::before {
+	transform: translateX(-7px) rotate(-45deg);
+}
+
+.caret_down::after {
+	transform: rotate(45deg);
+}
+
+.table {
+	display: block;
+	max-height: 60vh;
+	overflow: auto;
+
+	thead {
+		white-space: nowrap;
+	}
+
+	th:first-child:after {
+		content: 'Code';
+	}
+
+	th:nth-child(2):after {
+		content: 'Rate';
+	}
+
+	th:nth-child(3):after {
+		content: 'Name';
+	}
+
+	th:nth-child(4):after {
+		content: 'Used in';
+	}
+}
+
+@media only screen and (max-width: 1200px) {
+	.table {
+		thead * {
+			width: 25%;
+			white-space: nowrap;
+		}
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.table {
+		th:first-child:after {
+			content: 'Code';
+		}
+
+		th:nth-child(2):after {
+			content: 'Exchange Rate';
+		}
+
+		th:nth-child(3):after {
+			content: 'Currency Name';
+		}
+
+		th:nth-child(4):after {
+			content: 'Countries using';
+		}
+	}
+}
