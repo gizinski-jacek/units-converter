@@ -1,10 +1,15 @@
+.select {
+	max-width: fit-content;
+}
+
 .caret_up,
 .caret_down {
 	display: block;
-	width: 25px;
+	width: 27px;
 	height: 19px;
 	position: relative;
 	transition: 0.3s ease-in-out;
+	background-color: var(--bs-teal);
 }
 
 .caret_up::before,
@@ -14,10 +19,10 @@
 	content: '';
 	display: block;
 	position: absolute;
-	top: 1px;
-	right: 6px;
-	width: 3px;
-	height: 12px;
+	top: 3px;
+	right: 8px;
+	width: 2px;
+	height: 11px;
 	background-color: rgb(0, 0, 0);
 	transform-origin: center center;
 }
@@ -36,6 +41,15 @@
 
 .caret_down::after {
 	transform: rotate(45deg);
+}
+
+.reset {
+	width: 2em;
+	color: #000;
+	background: var(--bs-red)
+		url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e")
+		center/1em auto no-repeat;
+	border: 0;
 }
 
 .table {
@@ -67,7 +81,7 @@
 @media only screen and (max-width: 1200px) {
 	.table {
 		thead * {
-			width: 25%;
+			width: 1%;
 			white-space: nowrap;
 		}
 	}
