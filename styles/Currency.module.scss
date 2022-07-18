@@ -80,9 +80,8 @@
 
 @media only screen and (max-width: 1200px) {
 	.table {
-		thead * {
+		th {
 			width: 1%;
-			white-space: nowrap;
 		}
 	}
 }
