@@ -34,6 +34,7 @@ const Currency: NextPage = () => {
 				filtered.push({ ...item, exchangeRate: value });
 			}
 		}
+		console.log(filtered);
 		return filtered;
 	};
 
@@ -44,6 +45,8 @@ const Currency: NextPage = () => {
 			);
 			const data = await res.json();
 			const rates = data.response.rates;
+			console.log(rates);
+
 			return rates;
 		} catch (error: any) {
 			console.log(error);
@@ -220,7 +223,7 @@ const Currency: NextPage = () => {
 						<th scope='col-1'></th>
 						<th scope='col-2'></th>
 						<th scope='col-3' className='d-none d-md-table-cell'></th>
-						<th scope='col-2' className='d-none d-lg-table-cell'></th>
+						<th scope='col-4' className='d-none d-lg-table-cell'></th>
 					</tr>
 				</thead>
 				<tbody>{tableCurrencyDataRender}</tbody>
