@@ -1,13 +1,11 @@
-@use './variables';
-
 .footer {
 	width: 100%;
 	text-align: center;
-	background-color: variables.$blue;
+	background-color: var(--bs-blue);
 
 	a {
 		font-weight: 600;
-		color: variables.$white;
+		color: var(--bs-light);
 		padding: 4px;
 		display: flex;
 		justify-content: flex-end;
@@ -20,7 +18,7 @@
 		box-sizing: content-box;
 		border-radius: 50%;
 		padding: 1px;
-		background-color: variables.$white;
-		fill: variables.$black;
+		background-color: var(--bs-light);
+		fill: var(--bs-dark);
 	}
 }
