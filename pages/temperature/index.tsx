@@ -139,8 +139,8 @@ const Temperature: NextPage = () => {
 						onChange={handleInputChange}
 					/>
 					<div className='ms-1'>
-						<Caret up={true} cta={handleIncrement} />
-						<Caret up={false} cta={handleDecrement} />
+						<Caret upwards={true} cta={handleIncrement} />
+						<Caret upwards={false} cta={handleDecrement} />
 					</div>
 					<ResetBtn cta={handleInputClear} />
 				</div>
