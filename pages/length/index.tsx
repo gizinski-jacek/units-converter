@@ -1,9 +1,10 @@
 import { NextPage } from 'next';
 import { useRef, useState } from 'react';
-import styles from '../../styles/Length.module.scss';
-import lengthData from '../../data/lengthData';
+import { Table } from 'react-bootstrap';
 import Caret from '../../reusables/Caret';
 import ResetBtn from '../../reusables/ResetBtn';
+import lengthData from '../../data/lengthData';
+import styles from '../../styles/Length.module.scss';
 
 const Length: NextPage = () => {
 	const [inputValue, setInputValue] = useState(0);
@@ -68,11 +69,11 @@ const Length: NextPage = () => {
 		});
 
 	return (
-		<>
+		<div className={styles.length}>
 			<div className='mb-3'>
 				<div className='input-group'>
 					<select
-						className={`${styles.select} form-select`}
+						className='form-select'
 						name='currency'
 						id='currency'
 						value={chosenLength}
@@ -98,7 +99,7 @@ const Length: NextPage = () => {
 					<ResetBtn cta={handleInputClear} />
 				</div>
 			</div>
-			<table className={`${styles.table} table table-striped`}>
+			<Table striped bordered hover>
 				<thead className='table-primary'>
 					<tr>
 						<th scope='col-1'>Symbol</th>
@@ -106,8 +107,8 @@ const Length: NextPage = () => {
 					</tr>
 				</thead>
 				<tbody>{tableDataRender}</tbody>
-			</table>
-		</>
+			</Table>
+		</div>
 	);
 };
 

@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import { useRef, useState } from 'react';
+import { Table } from 'react-bootstrap';
 import Caret from '../../reusables/Caret';
 import ResetBtn from '../../reusables/ResetBtn';
 import styles from '../../styles/Temperature.module.scss';
@@ -113,11 +114,11 @@ const Temperature: NextPage = () => {
 	};
 
 	return (
-		<>
+		<div className={styles.temperature}>
 			<div className='mb-3'>
 				<div className='input-group'>
 					<select
-						className={`${styles.select} form-select`}
+						className='form-select'
 						name='currency'
 						id='currency'
 						value={chosenTemp}
@@ -145,7 +146,7 @@ const Temperature: NextPage = () => {
 					<ResetBtn cta={handleInputClear} />
 				</div>
 			</div>
-			<table className={`${styles.table} table table-striped`}>
+			<Table striped bordered hover>
 				<thead className='table-primary'>
 					<tr>
 						<th scope='col-1'>Unit</th>
@@ -155,8 +156,8 @@ const Temperature: NextPage = () => {
 					</tr>
 				</thead>
 				<tbody>{convertTempsAndRender(inputValue, chosenTemp)}</tbody>
-			</table>
-		</>
+			</Table>
+		</div>
 	);
 };
 
