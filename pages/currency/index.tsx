@@ -1,11 +1,9 @@
 import { NextPage } from 'next';
 import { useEffect, useRef, useState } from 'react';
+import { Spinner, Table } from 'react-bootstrap';
+import Caret from '../../reusables/Caret';
+import ResetBtn from '../../reusables/ResetBtn';
 import styles from '../../styles/Currency.module.scss';
-import cc from 'currency-codes';
-
-interface ResponseData {
-	[key: string]: number;
-}
 
 interface AggregatedData {
 	code: string;
@@ -19,50 +17,33 @@ interface AggregatedData {
 const Currency: NextPage = () => {
 	const [currencyData, setCurrencyData] = useState<AggregatedData[]>([]);
 	const [inputValue, setInputValue] = useState(0);
-	const [chosenCurrency, setChosenCurrency] = useState('USD');
+	const [chosenCurrency, setChosenCurrency] = useState('EUR');
 	const [searchValue, setSearchValue] = useState('');
+	const [isFetching, setIsFetching] = useState(false);
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const searchRef = useRef<HTMLInputElement>(null);
 
-	const aggregateData = (data: ResponseData) => {
-		const ccData = cc.data;
-		const filtered = [];
-		for (const [key, value] of Object.entries(data)) {
-			const item = ccData.find((item) => item.code === key);
-			if (item) {
-				filtered.push({ ...item, exchangeRate: value });
-			}
-		}
-		console.log(filtered);
-		return filtered;
-	};
-
 	const fetchExchangeRatesFromAPI = async (currency: string) => {
 		try {
-			const res = await fetch(
-				`https://api.currencyscoop.com/v1/latest?api_key=${process.env.RATES_API}&base=${currency}`
-			);
+			const res = await fetch(`/api/currencyRates`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ currency }),
+			});
 			const data = await res.json();
-			const rates = data.response.rates;
-			console.log(rates);
-
-			return rates;
+			setCurrencyData(data);
+			setIsFetching(false);
 		} catch (error: any) {
 			console.log(error);
 		}
 	};
 
 	useEffect(() => {
-		(async () => {
-			const rates = await fetchExchangeRatesFromAPI(chosenCurrency);
-			if (rates) {
-				const aggregate = aggregateData(rates);
-				setCurrencyData(aggregate);
-			} else {
-				console.log('No Rates Data');
-			}
-		})();
+		setIsFetching(true);
+		fetchExchangeRatesFromAPI(chosenCurrency);
 	}, [chosenCurrency]);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,42 +92,42 @@ const Currency: NextPage = () => {
 		searchRef.current?.select();
 	};
 
-	const currencyListRender = currencyData.map((c) => {
+	const currencyListRender = currencyData.map((currency) => {
 		return (
-			<option key={c.code} value={c.code}>
-				{c.code}
+			<option key={currency.code} value={currency.code}>
+				{currency.code}
 			</option>
 		);
 	});
 
-	const tableCurrencyDataRender = currencyData.map((c) => {
+	const tableCurrencyDataRender = currencyData.map((item) => {
 		if (searchValue) {
 			if (
-				c.code.toLowerCase().includes(searchValue.toLowerCase()) ||
-				c.currency.toLowerCase().includes(searchValue.toLowerCase()) ||
-				c.countries
+				item.code.toLowerCase().includes(searchValue.toLowerCase()) ||
+				item.currency.toLowerCase().includes(searchValue.toLowerCase()) ||
+				item.countries
 					.map((n) => n.toLowerCase())
 					.includes(searchValue.toLowerCase())
 			) {
 				return (
-					<tr key={c.code}>
-						<td>{c.code}</td>
-						<td>{Math.round(inputValue * c.exchangeRate * 100) / 100}</td>
-						<td className='d-none d-md-table-cell'>{c.currency}</td>
+					<tr key={item.code}>
+						<td>{item.code}</td>
+						<td>{Math.round(inputValue * item.exchangeRate * 100) / 100}</td>
+						<td className='d-none d-md-table-cell'>{item.currency}</td>
 						<td className='d-none d-lg-table-cell'>
-							{c.countries.join(', ').replace(' (The)', '')}
+							{item.countries.join(', ').replace(' (The)', '')}
 						</td>
 					</tr>
 				);
 			}
 		} else {
 			return (
-				<tr key={c.code}>
-					<td>{c.code}</td>
-					<td>{Math.round(inputValue * c.exchangeRate * 100) / 100}</td>
-					<td className='d-none d-md-table-cell'>{c.currency}</td>
+				<tr key={item.code}>
+					<td>{item.code}</td>
+					<td>{Math.round(inputValue * item.exchangeRate * 100) / 100}</td>
+					<td className='d-none d-md-table-cell'>{item.currency}</td>
 					<td className='d-none d-lg-table-cell'>
-						{c.countries.join(', ').replace(' (The)', '')}
+						{item.countries.join(', ').replace(' (The)', '')}
 					</td>
 				</tr>
 			);
@@ -154,14 +135,14 @@ const Currency: NextPage = () => {
 	});
 
 	return (
-		<div className='col-5'>
+		<div className={styles.currency}>
 			<div className='mb-3'>
 				<div className='input-group'>
-					<label htmlFor='value'></label>
 					<select
-						className={`${styles.select} form-select`}
+						className='form-select'
 						name='currency'
 						id='currency'
+						value={chosenCurrency}
 						onChange={(e) => handleCurrencyChange(e)}
 					>
 						{currencyListRender}
@@ -177,28 +158,15 @@ const Currency: NextPage = () => {
 						value={Math.round(inputValue * 100) / 100}
 						onChange={handleInputChange}
 					/>
-					<div className='mx-1'>
-						<button
-							type='button'
-							className={`${styles.caret_up} rounded-0 border border-dark border-1`}
-							onClick={handleIncrement}
-						></button>
-						<button
-							type='button'
-							className={`${styles.caret_down} rounded-0 border border-dark border-1`}
-							onClick={handleDecrement}
-						></button>
+					<div className='ms-1'>
+						<Caret upwards={true} cta={handleIncrement} />
+						<Caret upwards={false} cta={handleDecrement} />
 					</div>
-					<button
-						type='reset'
-						className={`${styles.reset} btn btn-danger rounded-0 border border-secondary border-1`}
-						onClick={handleInputClear}
-					></button>
+					<ResetBtn cta={handleInputClear} />
 				</div>
 			</div>
 			<div className='mb-3'>
 				<div className='input-group'>
-					<label htmlFor='value'></label>
 					<input
 						className='form-control'
 						ref={searchRef}
@@ -210,24 +178,31 @@ const Currency: NextPage = () => {
 						value={searchValue}
 						onChange={handleSearchChange}
 					/>
-					<button
-						type='reset'
-						className={`${styles.reset} btn btn-danger rounded-0 border border-secondary border-1 ms-1`}
-						onClick={handleSearchClear}
-					></button>
+					<ResetBtn cta={handleSearchClear} />
 				</div>
 			</div>
-			<table className={`${styles.table} table table-striped`}>
-				<thead className='table-primary'>
+			<Table striped bordered hover>
+				<thead className='table-dark'>
 					<tr>
 						<th scope='col-1'></th>
-						<th scope='col-2'></th>
+						<th scope='col-2'>
+							{isFetching ? (
+								<Spinner
+									animation='border'
+									variant='info'
+									role='status'
+									size='sm'
+								>
+									<span className='visually-hidden'>Loading...</span>
+								</Spinner>
+							) : null}
+						</th>
 						<th scope='col-3' className='d-none d-md-table-cell'></th>
 						<th scope='col-4' className='d-none d-lg-table-cell'></th>
 					</tr>
 				</thead>
 				<tbody>{tableCurrencyDataRender}</tbody>
-			</table>
+			</Table>
 		</div>
 	);
 };
