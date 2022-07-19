@@ -13,7 +13,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 				<Link href='/'>Units Converter</Link>
 			</div>
 			<main className={`${styles.main} row`}>
-				<Component {...pageProps} />
+				<div className='col-5 mx-5'>
+					<Component {...pageProps} />
+				</div>
 				<Navbar />
 			</main>
 			<Footer />
