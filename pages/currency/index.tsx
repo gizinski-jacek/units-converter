@@ -92,7 +92,7 @@ const Currency: NextPage = () => {
 		searchRef.current?.select();
 	};
 
-	const currencyListRender = currencyData.map((currency) => {
+	const currencyListRender = currencyData?.map((currency) => {
 		return (
 			<option key={currency.code} value={currency.code}>
 				{currency.code}
@@ -100,7 +100,7 @@ const Currency: NextPage = () => {
 		);
 	});
 
-	const tableCurrencyDataRender = currencyData.map((item) => {
+	const tableCurrencyDataRender = currencyData?.map((item) => {
 		if (searchValue) {
 			if (
 				item.code.toLowerCase().includes(searchValue.toLowerCase()) ||
