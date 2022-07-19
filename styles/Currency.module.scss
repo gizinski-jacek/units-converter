@@ -1,10 +1,8 @@
-.table {
-	display: block;
-	max-height: 60vh;
-	overflow: auto;
-
-	thead {
-		white-space: nowrap;
+.currency {
+	th:nth-child(2),
+	td:nth-child(2) {
+		min-width: 120px;
+		text-align: end;
 	}
 
 	th:first-child:after {
@@ -12,6 +10,7 @@
 	}
 
 	th:nth-child(2):after {
+		margin-left: 0.5rem;
 		content: 'Rate';
 	}
 
@@ -22,18 +21,14 @@
 	th:nth-child(4):after {
 		content: 'Used in';
 	}
-}
 
-@media only screen and (max-width: 1200px) {
-	.table {
-		th {
-			width: 1%;
+	@media only screen and (min-width: 1200px) {
+		th:nth-child(2),
+		td:nth-child(2) {
+			min-width: 160px;
+			text-align: end;
 		}
-	}
-}
 
-@media only screen and (min-width: 1200px) {
-	.table {
 		th:first-child:after {
 			content: 'Code';
 		}
