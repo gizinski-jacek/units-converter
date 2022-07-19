@@ -1,15 +1,16 @@
-.caret,
 .caret {
 	display: block;
 	width: 27px;
 	height: 19px;
 	position: relative;
-	transition: 0.3s ease-in-out;
-	background-color: var(--bs-teal);
+	background-color: var(--bs-info);
+	transition: 0.25s ease-in-out;
+
+	&:hover {
+		filter: brightness(75%);
+	}
 }
 
-.caret::before,
-.caret::after,
 .caret::before,
 .caret::after {
 	content: '';
