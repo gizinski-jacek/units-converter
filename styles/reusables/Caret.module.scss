@@ -1,0 +1,40 @@
+.caret,
+.caret {
+	display: block;
+	width: 27px;
+	height: 19px;
+	position: relative;
+	transition: 0.3s ease-in-out;
+	background-color: var(--bs-teal);
+}
+
+.caret::before,
+.caret::after,
+.caret::before,
+.caret::after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 3px;
+	right: 8px;
+	width: 2px;
+	height: 11px;
+	background-color: rgb(0, 0, 0);
+	transform-origin: center center;
+}
+
+.caret_up::before {
+	transform: translateX(-7px) rotate(45deg);
+}
+
+.caret_up::after {
+	transform: rotate(-45deg);
+}
+
+.caret_down::before {
+	transform: translateX(-7px) rotate(-45deg);
+}
+
+.caret_down::after {
+	transform: rotate(45deg);
+}
