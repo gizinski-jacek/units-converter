@@ -27,3 +27,26 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
 	-moz-appearance: textfield;
 }
+
+select {
+	max-width: fit-content;
+}
+
+table {
+	display: block;
+	max-height: 60vh;
+	overflow: auto;
+
+	thead {
+		white-space: nowrap;
+	}
+
+	th {
+		width: 1%;
+	}
+
+	th:not(:first-child),
+	td:not(:first-child) {
+		width: fit-content;
+	}
+}
