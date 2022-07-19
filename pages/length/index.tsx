@@ -2,6 +2,8 @@ import { NextPage } from 'next';
 import { useRef, useState } from 'react';
 import styles from '../../styles/Length.module.scss';
 import lengthData from '../../data/lengthData';
+import Caret from '../../reusables/Caret';
+import ResetBtn from '../../reusables/ResetBtn';
 
 const Length: NextPage = () => {
 	const [inputValue, setInputValue] = useState(0);
@@ -55,25 +57,25 @@ const Length: NextPage = () => {
 	});
 
 	const tableDataRender = lengthData
-		.find((x) => x.unit.toLowerCase() === chosenLength.toLowerCase())!
-		.conversion.map((l) => {
+		.find((item) => item.unit.toLowerCase() === chosenLength.toLowerCase())!
+		.conversion.map((length) => {
 			return (
-				<tr key={l.to}>
-					<td>{l.to}</td>
-					<td>{(inputValue * l.rate).toString().slice(0, 12)}</td>
+				<tr key={length.to}>
+					<td>{length.to}</td>
+					<td>{(inputValue * length.rate).toString().slice(0, 12)}</td>
 				</tr>
 			);
 		});
 
 	return (
-		<div className='col-5'>
+		<>
 			<div className='mb-3'>
 				<div className='input-group'>
-					<label htmlFor='value'></label>
 					<select
 						className={`${styles.select} form-select`}
 						name='currency'
 						id='currency'
+						value={chosenLength}
 						onChange={(e) => handleLengthChange(e)}
 					>
 						{lengthListRender}
@@ -89,23 +91,11 @@ const Length: NextPage = () => {
 						value={Math.round(inputValue * 100) / 100}
 						onChange={handleInputChange}
 					/>
-					<div className='mx-1'>
-						<button
-							type='button'
-							className={`${styles.caret_up} rounded-0 border border-dark border-1`}
-							onClick={handleIncrement}
-						></button>
-						<button
-							type='button'
-							className={`${styles.caret_down} rounded-0 border border-dark border-1`}
-							onClick={handleDecrement}
-						></button>
+					<div className='ms-1'>
+						<Caret upwards={true} cta={handleIncrement} />
+						<Caret upwards={false} cta={handleDecrement} />
 					</div>
-					<button
-						type='reset'
-						className={`${styles.reset} btn btn-danger rounded-0 border border-secondary border-1`}
-						onClick={handleInputClear}
-					></button>
+					<ResetBtn cta={handleInputClear} />
 				</div>
 			</div>
 			<table className={`${styles.table} table table-striped`}>
@@ -117,7 +107,7 @@ const Length: NextPage = () => {
 				</thead>
 				<tbody>{tableDataRender}</tbody>
 			</table>
-		</div>
+		</>
 	);
 };
 
