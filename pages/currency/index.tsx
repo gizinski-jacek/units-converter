@@ -112,7 +112,9 @@ const Currency: NextPage = () => {
 				return (
 					<tr key={item.code}>
 						<td>{item.code}</td>
-						<td>{Math.round(inputValue * item.exchangeRate * 100) / 100}</td>
+						<td className='text-end'>
+							{Math.round(inputValue * item.exchangeRate * 100) / 100}
+						</td>
 						<td className='d-none d-md-table-cell'>{item.currency}</td>
 						<td className='d-none d-lg-table-cell'>
 							{item.countries.join(', ').replace(' (The)', '')}
@@ -124,7 +126,9 @@ const Currency: NextPage = () => {
 			return (
 				<tr key={item.code}>
 					<td>{item.code}</td>
-					<td>{Math.round(inputValue * item.exchangeRate * 100) / 100}</td>
+					<td className='text-end'>
+						{Math.round(inputValue * item.exchangeRate * 100) / 100}
+					</td>
 					<td className='d-none d-md-table-cell'>{item.currency}</td>
 					<td className='d-none d-lg-table-cell'>
 						{item.countries.join(', ').replace(' (The)', '')}
@@ -185,7 +189,7 @@ const Currency: NextPage = () => {
 				<thead className='table-dark'>
 					<tr>
 						<th scope='col-1'></th>
-						<th scope='col-2'>
+						<th scope='col-2' className='text-end'>
 							{isFetching ? (
 								<Spinner
 									animation='border'

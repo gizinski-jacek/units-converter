@@ -63,7 +63,9 @@ const Length: NextPage = () => {
 			return (
 				<tr key={length.to}>
 					<td>{length.to}</td>
-					<td>{(inputValue * length.rate).toString().slice(0, 12)}</td>
+					<td className='text-end'>
+						{(inputValue * length.rate).toString().slice(0, 12)}
+					</td>
 				</tr>
 			);
 		});
@@ -100,10 +102,12 @@ const Length: NextPage = () => {
 				</div>
 			</div>
 			<Table striped bordered hover>
-				<thead className='table-primary'>
+				<thead className='table-dark'>
 					<tr>
 						<th scope='col-1'>Symbol</th>
-						<th scope='col-2'>Value</th>
+						<th scope='col-2' className='text-end'>
+							Value
+						</th>
 					</tr>
 				</thead>
 				<tbody>{tableDataRender}</tbody>
