@@ -147,7 +147,7 @@ const Temperature: NextPage = () => {
 				</div>
 			</div>
 			<Table striped bordered hover>
-				<thead className='table-primary'>
+				<thead className='table-dark'>
 					<tr>
 						<th scope='col-1'>Unit</th>
 						<th scope='col-2' className='text-end'>
