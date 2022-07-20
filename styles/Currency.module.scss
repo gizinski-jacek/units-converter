@@ -2,7 +2,6 @@
 	th:nth-child(2),
 	td:nth-child(2) {
 		min-width: 120px;
-		text-align: end;
 	}
 
 	th:first-child:after {
@@ -26,7 +25,6 @@
 		th:nth-child(2),
 		td:nth-child(2) {
 			min-width: 160px;
-			text-align: end;
 		}
 
 		th:first-child:after {
