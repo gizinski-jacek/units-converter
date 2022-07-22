@@ -3,9 +3,10 @@
 	flex-direction: column;
 	min-width: 576px;
 	min-height: 100vh;
+	background-color: var(--bs-gray-200);
 }
 
-.main {
+.content {
 	padding: 4rem 0;
 	flex: 1;
 	justify-content: center;
@@ -13,14 +14,19 @@
 }
 
 .title {
-	margin: 0;
 	line-height: 1.15;
 	font-size: 2rem;
 	text-align: center;
 
 	a {
+		color: var(--bs-light);
+		text-decoration: none;
+	}
+}
+
+.home {
+	a {
 		color: inherit;
-		display: block;
 		text-decoration: none;
 	}
 }
