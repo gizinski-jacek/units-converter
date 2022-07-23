@@ -4,7 +4,6 @@ import { Table } from 'react-bootstrap';
 import Caret from '../../reusables/Caret';
 import ResetBtn from '../../reusables/ResetBtn';
 import lengthData from '../../data/lengthData';
-import styles from '../../styles/Length.module.scss';
 
 const Length: NextPage = () => {
 	const [inputValue, setInputValue] = useState(0);
@@ -71,7 +70,7 @@ const Length: NextPage = () => {
 		});
 
 	return (
-		<div className={styles.length}>
+		<div>
 			<div className='mb-3'>
 				<div className='input-group'>
 					<select

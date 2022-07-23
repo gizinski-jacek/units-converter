@@ -3,7 +3,6 @@ import { useRef, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import Caret from '../../reusables/Caret';
 import ResetBtn from '../../reusables/ResetBtn';
-import styles from '../../styles/Temperature.module.scss';
 
 const Temperature: NextPage = () => {
 	const [inputValue, setInputValue] = useState(0);
@@ -114,7 +113,7 @@ const Temperature: NextPage = () => {
 	};
 
 	return (
-		<div className={styles.temperature}>
+		<div>
 			<div className='mb-3'>
 				<div className='input-group'>
 					<select
