@@ -1,4 +1,6 @@
 .nav {
+	display: flex;
+	flex-direction: column;
 	max-width: fit-content;
 	text-align: end;
 	height: fit-content;
@@ -7,7 +9,6 @@
 	background-color: var((--bs-light));
 
 	a {
-		display: block;
 		width: 120px;
 		padding: 0.25rem 0.5rem;
 		text-decoration: none;
