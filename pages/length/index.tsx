@@ -43,8 +43,8 @@ const Length: NextPage = () => {
 			<div className='mb-3'>
 				<InputGroup>
 					<Form.Select
-						name='currency'
-						id='currency'
+						name='length'
+						id='length'
 						value={chosenLength}
 						onChange={(e) => handleLengthChange(e)}
 					>

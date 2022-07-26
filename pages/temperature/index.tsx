@@ -88,8 +88,8 @@ const Temperature: NextPage = () => {
 			<div className='mb-3'>
 				<InputGroup>
 					<Form.Select
-						name='currency'
-						id='currency'
+						name='temperature'
+						id='temperature'
 						value={chosenTemp}
 						onChange={(e) => handleTempChange(e)}
 					>
