@@ -17,7 +17,7 @@ const Mass: NextPage = () => {
 		setChosenMass(value);
 	};
 
-	const masssListRender = massData.map((item) => {
+	const massListRender = massData.map((item) => {
 		return (
 			<option key={item.symbol} value={item.unit}>
 				{item.symbol}
@@ -48,7 +48,7 @@ const Mass: NextPage = () => {
 						value={chosenMass}
 						onChange={(e) => handleMassChange(e)}
 					>
-						{masssListRender}
+						{massListRender}
 					</Form.Select>
 					<FormInput updateParent={handleInputChange} />
 				</InputGroup>
