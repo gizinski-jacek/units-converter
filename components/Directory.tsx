@@ -31,7 +31,7 @@ const Directory = () => {
 				</div>
 				{directory.map((path) => (
 					<div key={path}>
-						<span>{' > '}</span>
+						<span>{' / '}</span>
 						<Link href={path}>
 							{path.charAt(0).toUpperCase() + path.slice(1)}
 						</Link>
