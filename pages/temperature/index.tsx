@@ -1,8 +1,7 @@
 import { NextPage } from 'next';
 import { useRef, useState } from 'react';
-import { Table } from 'react-bootstrap';
-import Caret from '../../reusables/Caret';
-import ResetBtn from '../../reusables/ResetBtn';
+import { Form, InputGroup, Table } from 'react-bootstrap';
+import FormInput from '../../reusables/FormInput';
 
 const Temperature: NextPage = () => {
 	const [inputValue, setInputValue] = useState(0);
@@ -10,41 +9,13 @@ const Temperature: NextPage = () => {
 
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = Number(e.target.value);
-		if (value < 0) {
-			setInputValue(0);
-		} else if (value > 999999) {
-			setInputValue(999999);
-		} else {
-			setInputValue(value);
-		}
+	const handleInputChange = (value: number) => {
+		setInputValue(value);
 	};
 
-	const handleLengthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleTempChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const value = e.target.value;
 		setChosenTemp(value);
-	};
-
-	const handleIncrement = () => {
-		if (inputValue >= 999999) {
-			setInputValue(999999);
-		} else {
-			setInputValue((prevState) => Math.round((prevState + 0.01) * 100) / 100);
-		}
-	};
-
-	const handleDecrement = () => {
-		if (inputValue <= 0) {
-			setInputValue(0);
-		} else {
-			setInputValue((prevState) => Math.round((prevState - 0.01) * 100) / 100);
-		}
-	};
-
-	const handleInputClear = () => {
-		setInputValue(0);
-		inputRef.current?.select();
 	};
 
 	const convertTempsAndRender = (value: number, fromTemp: string) => {
@@ -115,35 +86,19 @@ const Temperature: NextPage = () => {
 	return (
 		<div>
 			<div className='mb-3'>
-				<div className='input-group'>
-					<select
-						className='form-select'
+				<InputGroup>
+					<Form.Select
 						name='currency'
 						id='currency'
 						value={chosenTemp}
-						onChange={(e) => handleLengthChange(e)}
+						onChange={(e) => handleTempChange(e)}
 					>
 						<option value='celsius'>C</option>
 						<option value='fahrenheit'>F</option>
 						<option value='kelvin'>K</option>
-					</select>
-					<input
-						className='form-control'
-						ref={inputRef}
-						type='number'
-						id='value'
-						min={0}
-						max={999999}
-						step={0.01}
-						value={Math.round(inputValue * 100) / 100}
-						onChange={handleInputChange}
-					/>
-					<div className='ms-1'>
-						<Caret upwards={true} cta={handleIncrement} />
-						<Caret upwards={false} cta={handleDecrement} />
-					</div>
-					<ResetBtn cta={handleInputClear} />
-				</div>
+					</Form.Select>
+					<FormInput updateParent={handleInputChange} />
+				</InputGroup>
 			</div>
 			<Table striped bordered hover>
 				<thead className='table-dark'>
