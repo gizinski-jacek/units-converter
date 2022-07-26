@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import React from 'react';
+import { Nav } from 'react-bootstrap';
 import styles from '../styles/Navbar.module.scss';
 
 const Navbar = () => {
 	return (
-		<nav className={`${styles.nav} col-3 mx-3`}>
+		<Nav className={`${styles.nav} col-3 mx-3`}>
 			<Link href='/currency'>Currency</Link>
 			<Link href='/length'>Length</Link>
 			<Link href='/temperature'>Temperature</Link>
-		</nav>
+		</Nav>
 	);
 };
 
