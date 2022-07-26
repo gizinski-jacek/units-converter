@@ -1,23 +1,23 @@
 import { NextPage } from 'next';
 import { useState } from 'react';
 import { Form, InputGroup, Table } from 'react-bootstrap';
-import massData from '../../data/massData';
+import timeData from '../../data/timeData';
 import FormInput from '../../reusables/FormInput';
 
-const Mass: NextPage = () => {
+const Time: NextPage = () => {
 	const [inputValue, setInputValue] = useState(0);
-	const [chosenMass, setChosenMass] = useState('kilogram');
+	const [chosenTime, setChosenTime] = useState('hour');
 
 	const handleInputChange = (value: number) => {
 		setInputValue(value);
 	};
 
-	const handleMassChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const value = e.target.value;
-		setChosenMass(value);
+		setChosenTime(value);
 	};
 
-	const massListRender = massData.map((item) => {
+	const timeListRender = timeData.map((item) => {
 		return (
 			<option key={item.symbol} value={item.unit}>
 				{item.symbol}
@@ -25,14 +25,14 @@ const Mass: NextPage = () => {
 		);
 	});
 
-	const tableDataRender = massData
-		.find((item) => item.unit.toLowerCase() === chosenMass.toLowerCase())!
-		.conversion.map((mass) => {
+	const tableDataRender = timeData
+		.find((item) => item.unit.toLowerCase() === chosenTime.toLowerCase())!
+		.conversion.map((time) => {
 			return (
-				<tr key={mass.to}>
-					<td>{mass.to}</td>
+				<tr key={time.to}>
+					<td>{time.to}</td>
 					<td className='text-end'>
-						{(inputValue * mass.rate).toString().slice(0, 12)}
+						{(inputValue * time.rate).toString().slice(0, 12)}
 					</td>
 				</tr>
 			);
@@ -43,12 +43,12 @@ const Mass: NextPage = () => {
 			<div className='mb-3'>
 				<InputGroup>
 					<Form.Select
-						name='mass'
-						id='mass'
-						value={chosenMass}
-						onChange={(e) => handleMassChange(e)}
+						name='time'
+						id='time'
+						value={chosenTime}
+						onChange={(e) => handleTimeChange(e)}
 					>
-						{massListRender}
+						{timeListRender}
 					</Form.Select>
 					<FormInput updateParent={handleInputChange} />
 				</InputGroup>
@@ -68,4 +68,4 @@ const Mass: NextPage = () => {
 	);
 };
 
-export default Mass;
+export default Time;

@@ -8,7 +8,7 @@ const Navbar = () => {
 		<Nav className={`${styles.nav} col-3 mx-3`}>
 			{pagesLinksData.map((item) => {
 				return (
-					<Link key={item} href={`/${item}`}>
+					<Link key={item} href={`/${item.replace(' ', '-')}`}>
 						{item}
 					</Link>
 				);

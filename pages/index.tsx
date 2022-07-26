@@ -22,7 +22,7 @@ const Home: NextPage = () => {
 							key={item}
 							className='list-group-item list-group-item-action list-group-item-action'
 						>
-							<Link href={`/${item}`}>{`${
+							<Link href={`/${item.replace(' ', '-')}`}>{`${
 								item.charAt(0).toUpperCase() + item.slice(1)
 							} conversion`}</Link>
 						</li>
