@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import styles from '../styles/Main.module.scss';
+import styles from '../styles/Directory.module.scss';
 
 const Directory = () => {
 	const [directory, setDirectory] = useState<string[]>([]);
@@ -24,16 +24,18 @@ const Directory = () => {
 	} else {
 		return (
 			<div className={styles.directory}>
-				<Link key='home' href='./'>
-					Home
-				</Link>
+				<div>
+					<Link key='home' href='./'>
+						Home
+					</Link>
+				</div>
 				{directory.map((path) => (
-					<>
+					<div key={path}>
 						<span>{' > '}</span>
-						<Link key={path} href={path}>
+						<Link href={path}>
 							{path.charAt(0).toUpperCase() + path.slice(1)}
 						</Link>
-					</>
+					</div>
 				))}
 			</div>
 		);
