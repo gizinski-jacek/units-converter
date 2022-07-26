@@ -26,6 +26,39 @@
 .home {
 	li {
 		padding: 0;
+
+		&:hover {
+			filter: brightness(95%);
+		}
+
+		&:active {
+			filter: brightness(90%);
+		}
+	}
+
+	li:nth-child(1n) {
+		color: #664d03;
+		background-color: #fff3cd;
+	}
+
+	li:nth-child(2n) {
+		color: #0f5132;
+		background-color: #d1e7dd;
+	}
+
+	li:nth-child(3n) {
+		color: #842029;
+		background-color: #f8d7da;
+	}
+
+	li:nth-child(4n) {
+		color: #084298;
+		background-color: #cfe2ff;
+	}
+
+	li:nth-child(5n) {
+		color: #055160;
+		background-color: #cff4fc;
 	}
 
 	a {
