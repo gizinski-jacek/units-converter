@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import pagesLinksData from '../data/pagesLinksData';
 import styles from '../styles/Main.module.scss';
 
 const Home: NextPage = () => {
@@ -15,15 +16,18 @@ const Home: NextPage = () => {
 			</Head>
 			<h4>Available conversions:</h4>
 			<ul className='list-group my-3'>
-				<li className='list-group-item list-group-item-action list-group-item-action list-group-item-warning'>
-					<Link href='/currency'>Currency conversion</Link>
-				</li>
-				<li className='list-group-item list-group-item-action list-group-item-action list-group-item-success'>
-					<Link href='/length'>Length conversion</Link>
-				</li>
-				<li className='list-group-item list-group-item-action list-group-item-action list-group-item-danger'>
-					<Link href='/temperature'>Temperature conversion</Link>
-				</li>
+				{pagesLinksData.map((item) => {
+					return (
+						<li
+							key={item}
+							className='list-group-item list-group-item-action list-group-item-action'
+						>
+							<Link href={`/${item}`}>{`${
+								item.charAt(0).toUpperCase() + item.slice(1)
+							} conversion`}</Link>
+						</li>
+					);
+				})}
 			</ul>
 		</div>
 	);
