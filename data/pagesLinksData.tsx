@@ -1,3 +1,9 @@
-const pagesLinksData: string[] = ['currency', 'length', 'temperature', 'mass'];
+const pagesLinksData: string[] = [
+	'currency',
+	'length',
+	'temperature',
+	'mass',
+	'speed',
+];
 
 export default pagesLinksData;
