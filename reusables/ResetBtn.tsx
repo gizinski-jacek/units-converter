@@ -1,3 +1,4 @@
+import { Button } from 'react-bootstrap';
 import styles from '../styles/reusables/ResetBtn.module.scss';
 
 interface Props {
@@ -6,11 +7,11 @@ interface Props {
 
 const ResetBtn = ({ cta }: Props) => {
 	return (
-		<button
-			type='reset'
-			className={`${styles.reset} btn btn-danger rounded-0 border border-secondary border-1 m-1`}
+		<Button
+			variant='danger'
+			className={`${styles.reset} rounded-0 border-dark m-1`}
 			onClick={cta}
-		></button>
+		></Button>
 	);
 };
 
