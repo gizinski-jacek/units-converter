@@ -43,8 +43,14 @@ table {
 		top: 0;
 	}
 
-	th {
+	th,
+	td {
 		width: 1%;
+	}
+
+	th:first-child,
+	td:first-child {
+		white-space: nowrap;
 	}
 
 	th:not(:first-child),
