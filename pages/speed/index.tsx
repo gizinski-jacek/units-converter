@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { Form, InputGroup, Table } from 'react-bootstrap';
 import speedData from '../../data/speedData';
 import FormInput from '../../reusables/FormInput';
+import SearchInput from '../../reusables/SearchInput';
 
 const Speed: NextPage = () => {
 	const [inputValue, setInputValue] = useState(0);
 	const [chosenSpeed, setChosenSpeed] = useState('km/h');
+	const [searchValue, setSearchValue] = useState('');
 
 	const handleInputChange = (value: number) => {
 		setInputValue(value);
@@ -15,6 +17,10 @@ const Speed: NextPage = () => {
 	const handleSpeedChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const value = e.target.value;
 		setChosenSpeed(value);
+	};
+
+	const handleSearchChange = (value: string) => {
+		setSearchValue(value);
 	};
 
 	const speedListRender = speedData.map((item) => {
@@ -28,14 +34,30 @@ const Speed: NextPage = () => {
 	const tableDataRender = speedData
 		.find((item) => item.symbol.toLowerCase() === chosenSpeed.toLowerCase())!
 		.conversion.map((speed) => {
-			return (
-				<tr key={speed.to}>
-					<td>{speed.to}</td>
-					<td className='text-end'>
-						{(inputValue * speed.rate).toString().slice(0, 12)}
-					</td>
-				</tr>
-			);
+			if (searchValue) {
+				if (
+					speed.to.toLocaleLowerCase().includes(searchValue.toLowerCase()) ||
+					speed.full.toLocaleLowerCase().includes(searchValue.toLowerCase())
+				) {
+					return (
+						<tr key={speed.to}>
+							<td>{speed.to}</td>
+							<td className='text-end'>
+								{(inputValue * speed.rate).toString().slice(0, 12)}
+							</td>
+						</tr>
+					);
+				}
+			} else {
+				return (
+					<tr key={speed.to}>
+						<td>{speed.to}</td>
+						<td className='text-end'>
+							{(inputValue * speed.rate).toString().slice(0, 12)}
+						</td>
+					</tr>
+				);
+			}
 		});
 
 	return (
@@ -52,6 +74,9 @@ const Speed: NextPage = () => {
 					</Form.Select>
 					<FormInput updateParent={handleInputChange} />
 				</InputGroup>
+			</div>
+			<div className='mb-3'>
+				<SearchInput updateParent={handleSearchChange} />
 			</div>
 			<Table striped bordered hover>
 				<thead className='table-dark'>
