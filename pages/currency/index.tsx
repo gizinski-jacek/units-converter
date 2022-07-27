@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { useEffect, useRef, useState } from 'react';
 import { Form, InputGroup, Spinner, Table } from 'react-bootstrap';
 import FormInput from '../../reusables/FormInput';
-import ResetBtn from '../../reusables/ResetBtn';
+import SearchInput from '../../reusables/SearchInput';
 import styles from '../../styles/Currency.module.scss';
 
 interface AggregatedData {
@@ -20,8 +20,6 @@ const Currency: NextPage = () => {
 	const [chosenCurrency, setChosenCurrency] = useState('EUR');
 	const [searchValue, setSearchValue] = useState('');
 	const [isFetching, setIsFetching] = useState(false);
-
-	const searchRef = useRef<HTMLInputElement>(null);
 
 	const fetchExchangeRatesFromAPI = async (currency: string) => {
 		try {
@@ -54,13 +52,8 @@ const Currency: NextPage = () => {
 		setChosenCurrency(value);
 	};
 
-	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchValue(e.target.value);
-	};
-
-	const handleSearchClear = () => {
-		setSearchValue('');
-		searchRef.current?.select();
+	const handleSearchChange = (value: string) => {
+		setSearchValue(value);
 	};
 
 	const currencyListRender = currencyData?.map((currency) => {
@@ -71,38 +64,38 @@ const Currency: NextPage = () => {
 		);
 	});
 
-	const tableCurrencyDataRender = currencyData?.map((item) => {
+	const tableCurrencyDataRender = currencyData?.map((cur) => {
 		if (searchValue) {
 			if (
-				item.code.toLowerCase().includes(searchValue.toLowerCase()) ||
-				item.currency.toLowerCase().includes(searchValue.toLowerCase()) ||
-				item.countries
+				cur.code.toLowerCase().includes(searchValue.toLowerCase()) ||
+				cur.currency.toLowerCase().includes(searchValue.toLowerCase()) ||
+				cur.countries
 					.map((n) => n.toLowerCase())
 					.includes(searchValue.toLowerCase())
 			) {
 				return (
-					<tr key={item.code}>
-						<td>{item.code}</td>
+					<tr key={cur.code}>
+						<td>{cur.code}</td>
 						<td className='text-end'>
-							{Math.round(inputValue * item.exchangeRate * 100) / 100}
+							{Math.round(inputValue * cur.exchangeRate * 100) / 100}
 						</td>
-						<td className='d-none d-md-table-cell'>{item.currency}</td>
+						<td className='d-none d-md-table-cell'>{cur.currency}</td>
 						<td className='d-none d-lg-table-cell'>
-							{item.countries.join(', ').replace(' (The)', '')}
+							{cur.countries.join(', ').replace(' (The)', '')}
 						</td>
 					</tr>
 				);
 			}
 		} else {
 			return (
-				<tr key={item.code}>
-					<td>{item.code}</td>
+				<tr key={cur.code}>
+					<td>{cur.code}</td>
 					<td className='text-end'>
-						{Math.round(inputValue * item.exchangeRate * 100) / 100}
+						{Math.round(inputValue * cur.exchangeRate * 100) / 100}
 					</td>
-					<td className='d-none d-md-table-cell'>{item.currency}</td>
+					<td className='d-none d-md-table-cell'>{cur.currency}</td>
 					<td className='d-none d-lg-table-cell'>
-						{item.countries.join(', ').replace(' (The)', '')}
+						{cur.countries.join(', ').replace(' (The)', '')}
 					</td>
 				</tr>
 			);
@@ -125,19 +118,7 @@ const Currency: NextPage = () => {
 				</InputGroup>
 			</div>
 			<div className='mb-3'>
-				<div className='input-group'>
-					<Form.Control
-						ref={searchRef}
-						type='text'
-						id='value'
-						minLength={3}
-						maxLength={32}
-						placeholder='Search'
-						value={searchValue}
-						onChange={handleSearchChange}
-					/>
-					<ResetBtn cta={handleSearchClear} />
-				</div>
+				<SearchInput updateParent={handleSearchChange} />
 			</div>
 			<Table striped bordered hover>
 				<thead className='table-dark'>
