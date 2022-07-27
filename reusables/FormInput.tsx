@@ -4,7 +4,7 @@ import Caret from './Caret';
 import ResetBtn from './ResetBtn';
 
 interface Props {
-	updateParent: any;
+	updateParent: (value: number) => void;
 }
 
 const FormInput = ({ updateParent }: Props) => {
