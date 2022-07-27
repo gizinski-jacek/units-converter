@@ -93,9 +93,9 @@ const Temperature: NextPage = () => {
 						value={chosenTemp}
 						onChange={(e) => handleTempChange(e)}
 					>
-						<option value='celsius'>C</option>
-						<option value='fahrenheit'>F</option>
-						<option value='kelvin'>K</option>
+						<option value='celsius'>C (Celsius)</option>
+						<option value='fahrenheit'>F (Fahrenheit)</option>
+						<option value='kelvin'>K (Kelvin)</option>
 					</Form.Select>
 					<FormInput updateParent={handleInputChange} />
 				</InputGroup>

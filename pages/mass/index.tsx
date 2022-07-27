@@ -20,7 +20,7 @@ const Mass: NextPage = () => {
 	const massListRender = massData.map((item) => {
 		return (
 			<option key={item.symbol} value={item.unit}>
-				{item.symbol}
+				{item.symbol} ({item.unit})
 			</option>
 		);
 	});

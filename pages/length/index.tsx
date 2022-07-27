@@ -20,7 +20,7 @@ const Length: NextPage = () => {
 	const lengthListRender = lengthData.map((item) => {
 		return (
 			<option key={item.symbol} value={item.unit}>
-				{item.symbol}
+				{item.symbol} ({item.unit})
 			</option>
 		);
 	});
