@@ -1,6 +1,11 @@
-import { NextPage } from 'next';
-import { useEffect, useRef, useState } from 'react';
+import {
+	GetServerSideProps,
+	InferGetServerSidePropsType,
+	NextPage,
+} from 'next';
+import { useState } from 'react';
 import { Form, InputGroup, Spinner, Table } from 'react-bootstrap';
+import { fetchExchangeRatesFromAPI } from '../../utils/fetchExchangeRatesFromAPI';
 import FormInput from '../../reusables/FormInput';
 import SearchInput from '../../reusables/SearchInput';
 import styles from '../../styles/Currency.module.scss';
@@ -14,42 +19,32 @@ interface AggregatedData {
 	number: string;
 }
 
-const Currency: NextPage = () => {
-	const [currencyData, setCurrencyData] = useState<AggregatedData[]>([]);
+const Currency: NextPage = ({
+	data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+	const [currencyData, setCurrencyData] = useState<AggregatedData[]>(data);
 	const [inputValue, setInputValue] = useState(0);
 	const [chosenCurrency, setChosenCurrency] = useState('EUR');
 	const [searchValue, setSearchValue] = useState('');
 	const [isFetching, setIsFetching] = useState(false);
 
-	const fetchExchangeRatesFromAPI = async (currency: string) => {
+	const handleInputChange = (value: number) => {
+		setInputValue(value);
+	};
+
+	const handleCurrencyChange = async (
+		e: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		const value = e.target.value;
+		setChosenCurrency(value);
+		setIsFetching(true);
 		try {
-			const res = await fetch(`/api/currencyRates`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ currency }),
-			});
-			const data = await res.json();
+			const data = await fetchExchangeRatesFromAPI(value);
 			setCurrencyData(data);
 			setIsFetching(false);
 		} catch (error: any) {
 			console.log(error);
 		}
-	};
-
-	useEffect(() => {
-		setIsFetching(true);
-		fetchExchangeRatesFromAPI(chosenCurrency);
-	}, [chosenCurrency]);
-
-	const handleInputChange = (value: number) => {
-		setInputValue(value);
-	};
-
-	const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const value = e.target.value;
-		setChosenCurrency(value);
 	};
 
 	const handleSearchChange = (value: string) => {
@@ -144,6 +139,13 @@ const Currency: NextPage = () => {
 			</Table>
 		</div>
 	);
+};
+
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+	const data: AggregatedData[] = await fetchExchangeRatesFromAPI('EUR');
+	return {
+		props: { data },
+	};
 };
 
 export default Currency;
