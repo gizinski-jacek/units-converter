@@ -3,7 +3,7 @@ import styles from '../styles/Footer.module.scss';
 const Footer = () => {
 	return (
 		<footer className={styles.footer}>
-			<a href='https://github.com/gizinski-jacek/odinbook-client'>
+			<a href='https://github.com/gizinski-jacek/units-converter'>
 				Gizinski Jacek
 				<svg
 					viewBox='0 0 16 16'
