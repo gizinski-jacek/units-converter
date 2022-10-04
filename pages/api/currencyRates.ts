@@ -1,10 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import cc from 'currency-codes';
-
-interface ResData {
-	[key: string]: number;
-}
+import axios from 'axios';
 
 interface AggregatedData {
 	code: string;
@@ -21,12 +18,11 @@ export default async function handler(
 ) {
 	if (req.method === 'POST') {
 		try {
-			const apiRes = await fetch(
+			const apiRes = await axios.get(
 				`https://api.currencyscoop.com/v1/latest?api_key=${process.env.RATES_API}&base=${req.body.currency}`
 			);
 			const ccData = cc.data;
-			const data = await apiRes.json();
-			const rates: ResData = data.response.rates;
+			const rates: { [key: string]: number } = apiRes.data.response.rates;
 			const filtered = [];
 			for (const [key, value] of Object.entries(rates)) {
 				const item = ccData.find((item) => item.code === key);
@@ -34,9 +30,9 @@ export default async function handler(
 					filtered.push({ ...item, exchangeRate: value });
 				}
 			}
-			res.status(200).json(filtered);
+			return res.status(200).json(filtered);
 		} catch (error: any) {
-			res.status(200).json('Error, no rates data');
+			return res.status(404).json('Error, no rates data');
 		}
 	} else {
 		return res.status(404).json('No endpoint here');
