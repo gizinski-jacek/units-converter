@@ -22,7 +22,9 @@ interface AggregatedData {
 const Currency: NextPage = ({
 	data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-	const [currencyData, setCurrencyData] = useState<AggregatedData[]>(data);
+	const [currencyData, setCurrencyData] = useState<AggregatedData[] | null>(
+		data
+	);
 	const [inputValue, setInputValue] = useState(0);
 	const [chosenCurrency, setChosenCurrency] = useState('EUR');
 	const [searchValue, setSearchValue] = useState('');
@@ -142,10 +144,16 @@ const Currency: NextPage = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
-	const data: AggregatedData[] = await fetchExchangeRatesFromAPI('EUR');
-	return {
-		props: { data },
-	};
+	try {
+		const data: AggregatedData[] = await fetchExchangeRatesFromAPI('EUR');
+		return {
+			props: { data: data },
+		};
+	} catch (error) {
+		return {
+			props: { data: null },
+		};
+	}
 };
 
 export default Currency;
