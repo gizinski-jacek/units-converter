@@ -5,10 +5,11 @@ import {
 } from 'next';
 import { useState } from 'react';
 import { Form, InputGroup, Spinner, Table } from 'react-bootstrap';
-import { fetchExchangeRatesFromAPI } from '../../utils/fetchExchangeRatesFromAPI';
 import FormInput from '../../reusables/FormInput';
 import SearchInput from '../../reusables/SearchInput';
 import styles from '../../styles/Currency.module.scss';
+import cc from 'currency-codes';
+import axios from 'axios';
 
 interface AggregatedData {
 	code: string;
@@ -41,8 +42,8 @@ const Currency: NextPage = ({
 		setChosenCurrency(value);
 		setIsFetching(true);
 		try {
-			const data = await fetchExchangeRatesFromAPI(value);
-			setCurrencyData(data);
+			const res = await axios.post('/api/currencyRates', { currency: value });
+			setCurrencyData(res.data);
 			setIsFetching(false);
 		} catch (error: any) {
 			console.log(error);
@@ -145,9 +146,20 @@ const Currency: NextPage = ({
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
 	try {
-		const data: AggregatedData[] = await fetchExchangeRatesFromAPI('EUR');
+		const apiRes = await axios.get(
+			`https://api.currencyscoop.com/v1/latest?api_key=${process.env.RATES_API}&base=EUR`
+		);
+		const ccData = cc.data;
+		const rates: { [key: string]: number } = apiRes.data.response.rates;
+		const filtered = [];
+		for (const [key, value] of Object.entries(rates)) {
+			const item = ccData.find((item) => item.code === key);
+			if (item) {
+				filtered.push({ ...item, exchangeRate: value });
+			}
+		}
 		return {
-			props: { data: data },
+			props: { data: JSON.parse(JSON.stringify(filtered)) },
 		};
 	} catch (error) {
 		return {
