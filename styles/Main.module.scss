@@ -27,16 +27,13 @@
 		margin: 4px 0;
 
 		a {
-			font-weight: 600;
+			display: block;
 			color: var(--bs-light);
 			padding: 4px;
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-			text-decoration: none;
 		}
 
 		svg {
+			display: block;
 			box-sizing: content-box;
 			border-radius: 50%;
 			padding: 1px;
