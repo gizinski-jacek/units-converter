@@ -21,6 +21,30 @@
 		color: var(--bs-light);
 		text-decoration: none;
 	}
+
+	.github {
+		float: right;
+		margin: 4px 0;
+		background-color: var(--bs-dark);
+
+		a {
+			font-weight: 600;
+			color: var(--bs-light);
+			padding: 4px;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			text-decoration: none;
+		}
+
+		svg {
+			box-sizing: content-box;
+			border-radius: 50%;
+			padding: 1px;
+			background-color: var(--bs-light);
+			fill: var(--bs-dark);
+		}
+	}
 }
 
 .home {
