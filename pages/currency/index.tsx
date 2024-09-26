@@ -3,7 +3,7 @@ import {
 	InferGetServerSidePropsType,
 	NextPage,
 } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, InputGroup, Spinner, Table } from 'react-bootstrap';
 import FormInput from '../../reusables/FormInput';
 import SearchInput from '../../reusables/SearchInput';
@@ -23,6 +23,7 @@ interface AggregatedData {
 const Currency: NextPage = ({
 	data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+	const [isLoading, setIsLoading] = useState(true);
 	const [currencyData, setCurrencyData] = useState<AggregatedData[] | null>(
 		data
 	);
@@ -31,6 +32,12 @@ const Currency: NextPage = ({
 	const [searchValue, setSearchValue] = useState('');
 	const [isFetching, setIsFetching] = useState(false);
 
+	useEffect(() => {
+		if (currencyData !== null) {
+			setIsLoading(false);
+		}
+	}, [currencyData]);
+
 	const handleInputChange = (value: number) => {
 		setInputValue(value);
 	};
@@ -38,10 +45,10 @@ const Currency: NextPage = ({
 	const handleCurrencyChange = async (
 		e: React.ChangeEvent<HTMLSelectElement>
 	) => {
-		const value = e.target.value;
-		setChosenCurrency(value);
-		setIsFetching(true);
 		try {
+			const value = e.target.value;
+			setChosenCurrency(value);
+			setIsFetching(true);
 			const res = await axios.post('/api/currencyRates', { currency: value });
 			setCurrencyData(res.data);
 			setIsFetching(false);
@@ -100,7 +107,15 @@ const Currency: NextPage = ({
 		}
 	});
 
-	return (
+	return isLoading ? (
+		<Spinner
+			animation='grow'
+			variant='primary'
+			role='status'
+			className='d-block my-5 mx-auto'
+			style={{ width: '60px', height: '60px' }}
+		></Spinner>
+	) : (
 		<div className={styles.currency}>
 			<div className='mb-3'>
 				<InputGroup>
@@ -147,7 +162,7 @@ const Currency: NextPage = ({
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
 	try {
 		const apiRes = await axios.get(
-			`https://api.currencyscoop.com/v1/latest?api_key=${process.env.RATES_API}&base=EUR`
+			`${process.env.RATES_API_URI}?api_key=${process.env.RATES_API_KEY}&base=EUR`
 		);
 		const ccData = cc.data;
 		const rates: { [key: string]: number } = apiRes.data.response.rates;
