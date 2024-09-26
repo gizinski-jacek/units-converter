@@ -1,16 +1,18 @@
 # Units converter app
 
-A simple units converter app.
+A simple units converter app utilizing [CurrenyBeacon API](https://currencybeacon.com/api-documentation) for current currency conversion rates.
 
 ## Table of contents
 
-- [Github & Live](#github--live)
-- [Getting Started](#getting-started)
-- [React](#react)
-- [Deploy](#deploy)
-- [Features](#features)
-- [Status](#status)
-- [Contact](#contact)
+- [Units converter app](#units-converter-app)
+  - [Table of contents](#table-of-contents)
+- [Github \& Live](#github--live)
+  - [Getting Started](#getting-started)
+  - [Learn More](#learn-more)
+  - [Deploy](#deploy)
+  - [Features](#features)
+  - [Status](#status)
+  - [Contact](#contact)
 
 # Github & Live
 
@@ -55,10 +57,17 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
+Don't forget to add **.env** file with these environment variables for the app:
+
+```
+RATES_API_URI
+RATES_API_KEY
+```
+
 ## Features
 
-- Convert currencies with help of [CurrencyScoop API](https://api.currencyscoop.com)
-- Search functionality to filter currencies you're interested in
+- Convert currencies with help of [CurrenyBeacon API](https://currencybeacon.com/api-documentation)
+- Search functionality to filter currencies you are interested in
 - Convert length units between metric and imperial
 - Convert temperature, mass, time, speed, and data storage
 
