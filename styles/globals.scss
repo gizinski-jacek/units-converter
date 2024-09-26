@@ -34,13 +34,18 @@ select {
 
 table {
 	display: block;
-	max-height: 60vh;
-	overflow: auto;
 
 	thead {
+		display: block;
 		white-space: nowrap;
 		position: sticky;
 		top: 0;
+	}
+
+	tbody {
+		display: block;
+		max-height: 60vh;
+		overflow-y: scroll;
 	}
 
 	th,
