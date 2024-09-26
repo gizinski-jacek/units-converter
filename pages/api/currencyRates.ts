@@ -19,7 +19,7 @@ export default async function handler(
 	if (req.method === 'POST') {
 		try {
 			const apiRes = await axios.get(
-				`https://api.currencyscoop.com/v1/latest?api_key=${process.env.RATES_API}&base=${req.body.currency}`
+				`${process.env.RATES_API_URI}?api_key=${process.env.RATES_API_KEY}&base=${req.body.currency}`
 			);
 			const ccData = cc.data;
 			const rates: { [key: string]: number } = apiRes.data.response.rates;
