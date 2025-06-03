@@ -11,7 +11,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 		<div className={styles.container}>
 			<header className={`${styles.title} bg-dark p-2`}>
 				<Link href='/'>Units Converter</Link>
-				<div className={styles.github}>
+				{/* <div className={styles.github}>
 					<a href='https://github.com/gizinski-jacek/units-converter'>
 						<svg
 							viewBox='0 0 16 16'
@@ -25,7 +25,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 							></path>
 						</svg>
 					</a>
-				</div>
+				</div> */}
 			</header>
 			<Directory />
 			<main className={`${styles.content} row`}>
