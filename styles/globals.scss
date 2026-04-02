@@ -7,6 +7,11 @@ body {
 		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+h6 {
+	font-size: 0.8rem !important;
+	margin-bottom: 0.25rem !important;
+}
+
 a {
 	color: inherit;
 	text-decoration: none;
@@ -25,6 +30,7 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type='number'] {
+	appearance: textfield;
 	-moz-appearance: textfield;
 }
 
@@ -34,18 +40,14 @@ select {
 
 table {
 	display: block;
+	position: relative;
+	max-height: 60vh;
+	overflow-y: auto;
 
 	thead {
-		display: block;
 		white-space: nowrap;
 		position: sticky;
 		top: 0;
-	}
-
-	tbody {
-		display: block;
-		max-height: 60vh;
-		overflow-y: scroll;
 	}
 
 	th,
