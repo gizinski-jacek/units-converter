@@ -10,6 +10,7 @@ import SearchInput from '../../reusables/SearchInput';
 import styles from '../../styles/Currency.module.scss';
 import cc from 'currency-codes';
 import axios from 'axios';
+import Link from 'next/link';
 
 interface AggregatedData {
 	code: string;
@@ -74,9 +75,9 @@ const Currency: NextPage = ({
 			if (
 				cur.code.toLowerCase().includes(searchValue.toLowerCase()) ||
 				cur.currency.toLowerCase().includes(searchValue.toLowerCase()) ||
-				cur.countries
-					.map((n) => n.toLowerCase())
-					.includes(searchValue.toLowerCase())
+				cur.countries.find((c) =>
+					c.toLowerCase().includes(searchValue.toLowerCase())
+				)
 			) {
 				return (
 					<tr key={cur.code}>
@@ -133,6 +134,12 @@ const Currency: NextPage = ({
 			<div className='mb-3'>
 				<SearchInput updateParent={handleSearchChange} />
 			</div>
+			<h6>
+				Based on data from{' '}
+				<a href='https://currencybeacon.com/' target='_blank' rel='noreferrer'>
+					Currency Beacon API
+				</a>
+			</h6>
 			<Table striped bordered hover>
 				<thead className='table-dark'>
 					<tr>
